@@ -1,0 +1,54 @@
+.ml-auto{
+    position: relative;
+    left: 700px;
+}
+.container{
+    width: 900px;
+}
+.list-group{
+    width: 875px;
+    position: relative;
+    left: 280px;
+}
+.imagen{
+    width: 200px;
+    height: 200px;
+    border-radius: 100%;
+    object-fit: cover;
+    margin: 15px;
+}
+.fa-location-dot{
+    font-size: 23px;
+    position: relative;
+    top: -30px;
+    left: 20px;
+}
+.fa-envelope{
+    font-size: 23px;
+    position: relative;
+    top: 5px;
+    left: -23px;
+}
+.fa-phone{
+    font-size: 23px;
+    position: relative;
+    bottom: -45px;
+}
+.titulo{
+    display: flex;
+    justify-content: center;
+    position: relative;
+    bottom: -20px;
+}
+.fa-pen{
+    font-size: 23px;
+    position: relative;
+    right: -465px;
+    top: -50px;
+}
+.fa-trash{
+     font-size: 23px;
+    position: relative;
+    right: -500px;
+    top: -50px;
+}

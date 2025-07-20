@@ -2,17 +2,23 @@ import { Link } from "react-router-dom";
 
 export const Navbar = () => {
     return (
-        <div className="container">
-        <nav className="navbar navbar-light bg-light">
-            <div className="container ">
-                <div className="ml-auto">
-                    <Link to="/demo">
-                        <button className="btn bg-success">Add new contact</button>
+        <nav className= "navbar navbar-light bg-light">
+            <div className="container-fluid">
+                <Link className="navbar-brand" to="/">
+                Home
+                </Link>
+                <div className="cointainer d-flex justify-content-center">
+                    <Link to="/AddContact">
+                    <button
+                    className="btn btn-primary"
+                    style={{ fontSize: "1.5rem" , padding: "1rem 2rem"}}
+                    >
+                        Add New Contact
+                    </button>
                     </Link>
                 </div>
             </div>
         </nav>
-        </div>
-    );
-};
+    
+)};
 export default Navbar;

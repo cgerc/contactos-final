@@ -10,8 +10,8 @@ export const Navbar = () => {
                 <div className="cointainer d-flex justify-content-center">
                     <Link to="/AddContact">
                     <button
-                    className="btn btn-primary"
-                    style={{ fontSize: "1.5rem" , padding: "1rem 2rem"}}
+                    className="btn bg-success"
+                    style={{ fontSize: "1rem"}}
                     >
                         Add New Contact
                     </button>

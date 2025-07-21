@@ -1,10 +1,32 @@
 
+const AddContact = () => {
+  const [data, setData] = useState("");
+  const [tasks, setTasks] = useState([]);
+ 
+    fetch("https://playground.4geeks.com/contact/agendas/cgerc", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        "label": data,
+        "is_done": false
+      }),
+    })
+      .then((respuesta) => {
+        return respuesta.json();
 
+      })
+      .then((data) => {
+        console.log(data)
+        getTodos();
 
+      })
+      .catch((error) => console.log(error));
+      
+  
 
-
-const AddContact = () =>{
-    return(
+   return(
     <form className="list-group">
         <h1 className="text-center">Add a new contact</h1>
         <label for="Full Name">Full Name</label>
@@ -15,8 +37,10 @@ const AddContact = () =>{
          <input className="form-control" type="num" name="Phone" placeholder="Enter phone"></input><br></br>
         <label for="Address">Address</label>
         <input className="form-control" type="text" name="Address" placeholder="Enter address"></input><br></br>
-           <button type="button" class="btn btn-primary">Save</button>
+           <button type="button" className="btn btn-primary">Save</button>
          <p><a class="link-opacity-100" href="#">or get back to contacts</a></p>
     </form>
     )}
     export default AddContact; 
+  
+   

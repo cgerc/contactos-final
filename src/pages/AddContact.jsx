@@ -1,9 +1,16 @@
-
+import { useState } from "react";
 const AddContact = () => {
   const [data, setData] = useState("");
-  const [tasks, setTasks] = useState([]);
+      const [contact, setContact]= useState({
+        name:'',
+        email:'',
+        phone:'',
+        adress:''
+      });
+      
+
  
-    fetch("https://playground.4geeks.com/contact/agendas/cgerc", {
+    fetch("https://playground.4geeks.com/contact/agendas/cgerc/contacts", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -24,7 +31,9 @@ const AddContact = () => {
       })
       .catch((error) => console.log(error));
       
-  
+  const handleChange =(event) => {
+    setData (event.target.value);
+  };
 
    return(
     <form className="list-group">

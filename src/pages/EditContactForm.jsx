@@ -1,45 +1,30 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const AddContact = () => {
+const EditContact = ({ contactId }) => { // Recibe el ID del contacto a editar
   const [contact, setContact] = useState({
     name: '',
     email: '',
     phone: '',
-    address: ''  
+    address: ''
   });
 
-  const añadirContacto = () => {
-    fetch("https://playground.4geeks.com/contact/agendas/cgerc/contacts", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        name: contact.name,
-        email: contact.email,
-        phone: contact.phone,
-        address: contact.address
-      })
-    }) 
-    .then((respuesta) => {
-      return respuesta.json();
-    })
-    .then((data) => {
-      console.log(data);
-      alert("Usuario creado con éxito");
-      
-      // Limpiar el formulario
-      setContact({
-        name: '',
-        email: '',
-        phone: '',
-        address: ''
-      });
-    })
-    .catch((error) => console.log(error));
-  };
+  // Cargar los datos del contacto existente
+  useEffect(() => {
+    if (contactId) {
+      fetch(`https://playground.4geeks.com/contact/agendas/cgerc/contacts/${contactId}`)
+        .then(response => response.json())
+        .then(data => {
+          setContact({
+            name: data.name || '',
+            email: data.email || '',
+            phone: data.phone || '',
+            address: data.address || ''
+          });
+        })
+        .catch(error => console.log(error));
+    }
+  }, [contactId]);
 
-  
   const handleChange = (event) => {
     const { name, value } = event.target;
     setContact(prevContact => ({
@@ -48,17 +33,40 @@ const AddContact = () => {
     }));
   };
 
+  const actualizarContacto = () => {
+    fetch(`https://playground.4geeks.com/contact/agendas/cgerc/contacts/${contactId}`, {
+      method: "PUT", // PUT para actualizar
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        name: contact.name,
+        email: contact.email,
+        phone: contact.phone,
+        address: contact.address
+      }),
+    })
+    .then((respuesta) => {
+      return respuesta.json();
+    })
+    .then((data) => {
+      console.log(data);
+      alert("Contacto actualizado con éxito");
+    })
+    .catch((error) => console.log(error));
+  };
+
   return (
     <form className="list-group">
-      <h1 className="text-center">Add a new contact</h1>
+      <h1 className="text-center">Edit Contact</h1>
       
       <label htmlFor="name">Full Name</label>
       <input 
         className="form-control" 
         type="text" 
-        name="name"  
+        name="name" 
         placeholder="Full Name"
-        value={contact.name}  
+        value={contact.name}
         onChange={handleChange}
       />
       <br />
@@ -66,7 +74,7 @@ const AddContact = () => {
       <label htmlFor="email">Email</label>
       <input 
         className="form-control" 
-        type="email"  
+        type="email" 
         name="email" 
         placeholder="Enter email"
         value={contact.email}
@@ -77,7 +85,7 @@ const AddContact = () => {
       <label htmlFor="phone">Phone</label>
       <input 
         className="form-control" 
-        type="tel"  
+        type="tel" 
         name="phone" 
         placeholder="Enter phone"
         value={contact.phone}
@@ -89,28 +97,21 @@ const AddContact = () => {
       <input 
         className="form-control" 
         type="text" 
-        name="address"  
+        name="address" 
         placeholder="Enter address"
         value={contact.address}
         onChange={handleChange}
       />
       <br />
       
-      <button 
-        type="button" 
-        className="btn btn-primary" 
-        onClick={añadirContacto}  
-      >
-        Save
+      <button type="button" className="btn btn-primary" onClick={actualizarContacto}>
+        Update Contact
       </button>
-      
-        <p>
-        <a className="link-opacity-100" href="#" onClick={() => navigate("/home")}>
-          or get back to contacts
-        </a>
+      <p>
+        <a className="link-opacity-100" href="#">or get back to contacts</a>
       </p>
     </form>
   );
 };
 
-export default AddContact;
+export default EditContact;

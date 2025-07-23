@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import  AddContact  from "./pages/AddContact";
 import  Contact  from "./pages/Contact";
+import EditContactForm from "./pages/EditContactForm";
 import { Layout } from "./pages/Layout";
 import  Home  from "./pages/Home";
 import { Single } from "./pages/Single";
@@ -28,7 +29,7 @@ export const router = createBrowserRouter(
         <Route path="/single/:theId" element={ <Single />} />  {/* Dynamic route for single items */}
         <Route path="/add-contact" element={<AddContact />} />
         <Route path="/contact" element={<Contact />} /> 
-        <Route path="/edit-contact" element={<EditContactForm />} />
+        <Route path="/edit-contact-form" element={<EditContactForm />} />
       </Route>
     )
 );

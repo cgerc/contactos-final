@@ -1,3 +1,4 @@
+/*import {Link} from react-router-dom;
 import { useState, useEffect } from "react";
 
 const EditContact = ({ contactId }) => { // Recibe el ID del contacto a editar
@@ -8,7 +9,7 @@ const EditContact = ({ contactId }) => { // Recibe el ID del contacto a editar
     address: ''
   });
 
-  // Cargar los datos del contacto existente
+
   useEffect(() => {
     if (contactId) {
       fetch(`https://playground.4geeks.com/contact/agendas/cgerc/contacts/${contactId}`)
@@ -114,4 +115,4 @@ const EditContact = ({ contactId }) => { // Recibe el ID del contacto a editar
   );
 };
 
-export default EditContact;
+export default EditContact;*/

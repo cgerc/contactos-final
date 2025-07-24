@@ -19,9 +19,9 @@ const Home = () => {
 	return (
 
 		<>
-			<Card />
-			<Contact />
-			<AddContact/>
+			
+			<Contact/>
+			
 
 
 

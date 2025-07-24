@@ -36,7 +36,7 @@ const EditContact = ({ contactId }) => { // Recibe el ID del contacto a editar
 
   const actualizarContacto = () => {
     fetch(`https://playground.4geeks.com/contact/agendas/cgerc/contacts/${contactId}`, {
-      method: "PUT", // PUT para actualizar
+      method: "PUT", 
       headers: {
         "Content-Type": "application/json"
       },
@@ -57,6 +57,24 @@ const EditContact = ({ contactId }) => { // Recibe el ID del contacto a editar
     .catch((error) => console.log(error));
   };
 
+  const deleteTodo = () => {
+    fetch("https://playground.4geeks.com/todo/todos/" + id, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+
+      .then(respuesta => {
+        if (respuesta.ok) {
+          setContact((prev) => prev.filter((contact) => contact.id !== id));
+          get
+        }
+        console.log(respuesta.status)
+      })
+      .catch((error) => console.log(error));
+
+  }
   return (
     <form className="list-group">
       <h1 className="text-center">Edit Contact</h1>
@@ -109,7 +127,7 @@ const EditContact = ({ contactId }) => { // Recibe el ID del contacto a editar
         Update Contact
       </button>
       <p>
-        <a className="link-opacity-100" href="#">or get back to contacts</a>
+        <Link className="link-opacity-100" href="#">or get back to contacts</Link>
       </p>
     </form>
   );

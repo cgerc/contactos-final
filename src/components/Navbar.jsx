@@ -8,7 +8,7 @@ export const Navbar = () => {
                 Home
                 </Link>
                 <div className="cointainer d-flex justify-content-center">
-                    <Link to="/AddContact">
+                    <Link to="/add-contact">
                     <button
                     className="btn bg-success"
                     style={{ fontSize: "1rem"}}

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 
 const AddContact = () => {
   const [contact, setContact] = useState({
@@ -8,7 +9,8 @@ const AddContact = () => {
     phone: "",
     address: "",
   });
-  const navigate = useNavigate(); 
+  const { dispatch } = useGlobalReducer();
+  const navigate = useNavigate();
 
   const añadirContacto = () => {
     fetch("https://playground.4geeks.com/contact/agendas/cgerc/contacts", {
@@ -30,13 +32,19 @@ const AddContact = () => {
         return respuesta.json();
       })
       .then((data) => {
-        console.log(data);
+        dispatch({ type: "ADD_CONTACT", payload: data });
         alert("Usuario creado con éxito");
-        navigate("/"); 
+        setContact({
+          name: "",
+          email: "",
+          phone: "",
+          address: "",
+        });
+        navigate("/contact");
       })
       .catch((error) => {
         console.error("Error al añadir contacto:", error);
-        alert("Error al crear el contacto. Por favor, intenta de nuevo.");
+        dispatch({ type: "SET_MESSAGE", payload: "Error al crear el contacto" });
       });
   };
 
@@ -49,7 +57,7 @@ const AddContact = () => {
   };
 
   return (
-    <form className="list-group">
+    <form className="list-group container">
       <h1 className="text-center">Add a new contact</h1>
 
       <label htmlFor="name">Full Name</label>
@@ -105,7 +113,7 @@ const AddContact = () => {
       </button>
 
       <p>
-        <Link className="link-opacity-100" to="/">
+        <Link className="link-opacity-100" to="/contact">
           or get back to contacts
         </Link>
       </p>

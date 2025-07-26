@@ -3,18 +3,17 @@ import { useNavigate, useParams, Link } from "react-router-dom";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 
 const EditContact = () => {
-  const { contactId } = useParams(); // Obtener contactId de la URL
+  const { contactId } = useParams();
   const [contact, setContact] = useState({
     name: "",
     email: "",
     phone: "",
     address: "",
   });
-  const [showModal, setShowModal] = useState(false); // Estado para controlar el modal
+  const [showModal, setShowModal] = useState(false);
   const { dispatch } = useGlobalReducer();
   const navigate = useNavigate();
 
-  // Obtener datos del contacto al montar el componente
   useEffect(() => {
     if (contactId) {
       fetch(`https://playground.4geeks.com/contact/agendas/cgerc/contacts/${contactId}`)
@@ -68,7 +67,7 @@ const EditContact = () => {
       })
       .then((data) => {
         dispatch({ type: "EDIT_CONTACT", payload: { id: contactId, ...data } });
-        alert("Contacto actualizado con éxito");
+        dispatch({ type: "SET_MESSAGE", payload: "Contacto actualizado con éxito" });
         navigate("/contact");
       })
       .catch((error) => {
@@ -92,23 +91,21 @@ const EditContact = () => {
           type: "DELETE_CONTACT",
           payload: contactId,
         });
-        setShowModal(false); // Cerrar el modal
-        alert("¿Are you sure?");
+        setShowModal(false);
+        dispatch({ type: "SET_MESSAGE", payload: "Contacto eliminado con éxito" });
         navigate("/contact");
       })
       .catch((error) => {
         console.error("Error al eliminar contacto:", error);
         dispatch({ type: "SET_MESSAGE", payload: "Error al eliminar el contacto" });
-        setShowModal(false); // Cerrar el modal en caso de error
+        setShowModal(false);
       });
   };
 
-  // Mostrar el modal cuando se haga clic en "Delete Contact"
   const handleDeleteClick = () => {
     setShowModal(true);
   };
 
-  // Cerrar el modal sin eliminar
   const handleCloseModal = () => {
     setShowModal(false);
   };
@@ -172,7 +169,7 @@ const EditContact = () => {
         <button
           type="button"
           className="btn btn-danger"
-          onClick={handleDeleteClick} // Cambia a handleDeleteClick
+          onClick={handleDeleteClick}
         >
           Delete Contact
         </button>
@@ -183,7 +180,6 @@ const EditContact = () => {
         </p>
       </form>
 
-      {/* Modal de confirmación */}
       {showModal && (
         <div className="modal" tabIndex="-1" style={{ display: "block" }}>
           <div className="modal-dialog">
@@ -203,15 +199,15 @@ const EditContact = () => {
               <div className="modal-footer">
                 <button
                   type="button"
-                  className="btn btn-secondary"
-                  onClick={deleteContact} // Ejecuta deleteContact al confirmar
+                  className="btn btn-danger"
+                  onClick={deleteContact}
                 >
                   Yes
                 </button>
                 <button
                   type="button"
-                  className="btn btn-primary"
-                  onClick={handleCloseModal} // Cierra el modal sin eliminar
+                  className="btn btn-secondary"
+                  onClick={handleCloseModal}
                 >
                   No
                 </button>
@@ -220,7 +216,6 @@ const EditContact = () => {
           </div>
         </div>
       )}
-      {/* Fondo del modal para oscurecer el resto de la pantalla */}
       {showModal && <div className="modal-backdrop fade show"></div>}
     </>
   );

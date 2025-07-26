@@ -1,9 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 
 const Contact = () => {
   const { store, dispatch } = useGlobalReducer();
+  const [showModal, setShowModal] = useState(false);
+  const [contactToDelete, setContactToDelete] = useState(null);
 
   // Crear agenda si no existe
   const createAgenda = () => {
@@ -66,12 +68,26 @@ const Contact = () => {
           type: "DELETE_CONTACT",
           payload: contactId,
         });
-        alert("Contacto eliminado con éxito");
+        setShowModal(false);
+        dispatch({ type: "SET_MESSAGE", payload: "Contacto eliminado con éxito" });
       })
       .catch((error) => {
         console.error("Error al eliminar contacto:", error);
         dispatch({ type: "SET_MESSAGE", payload: "Error al eliminar el contacto" });
+        setShowModal(false);
       });
+  };
+
+  // Mostrar modal de confirmación
+  const handleDeleteClick = (contactId) => {
+    setContactToDelete(contactId);
+    setShowModal(true);
+  };
+
+  // Cerrar modal sin eliminar
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setContactToDelete(null);
   };
 
   useEffect(() => {
@@ -83,7 +99,7 @@ const Contact = () => {
     <div className="container mt-4">
       {store.message && <div className="alert alert-danger">{store.message}</div>}
       {store.contacts.length === 0 ? (
-        <div>No hay contactos disponibles.</div>
+        <h1 className="text-center">No hay contactos disponibles.</h1>
       ) : (
         <ul className="list-group">
           {store.contacts.map((contact) => (
@@ -118,7 +134,7 @@ const Contact = () => {
                 </Link>
                 <button
                   className="btn btn-link text-dark"
-                  onClick={() => deleteContact(contact.id)}
+                  onClick={() => handleDeleteClick(contact.id)}
                 >
                   <i className="fa-solid fa-trash"></i>
                 </button>
@@ -127,6 +143,45 @@ const Contact = () => {
           ))}
         </ul>
       )}
+
+      {/* Modal de confirmación */}
+      {showModal && (
+        <div className="modal" tabIndex="-1" style={{ display: "block" }}>
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Confirm Delete</h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  onClick={handleCloseModal}
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div className="modal-body">
+                <p>¿Are you sure you want to delete this contact?</p>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-danger"
+                  onClick={() => deleteContact(contactToDelete)}
+                >
+                  Yes
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={handleCloseModal}
+                >
+                  No
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {showModal && <div className="modal-backdrop fade show"></div>}
     </div>
   );
 };

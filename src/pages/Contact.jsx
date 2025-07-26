@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import '../index.css';
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 
 const Contact = () => {
@@ -7,7 +8,7 @@ const Contact = () => {
   const [showModal, setShowModal] = useState(false);
   const [contactToDelete, setContactToDelete] = useState(null);
 
-  // Crear agenda si no existe
+  
   const createAgenda = () => {
     fetch("https://playground.4geeks.com/contact/agendas/cgerc", {
       method: "POST",
@@ -29,7 +30,7 @@ const Contact = () => {
       });
   };
 
-  // Obtener contactos
+  
   const actContacto = () => {
     fetch("https://playground.4geeks.com/contact/agendas/cgerc/contacts", {
       method: "GET",
@@ -52,7 +53,7 @@ const Contact = () => {
       });
   };
 
-  // Eliminar contacto
+  
   const deleteContact = (contactId) => {
     fetch(`https://playground.4geeks.com/contact/agendas/cgerc/contacts/${contactId}`, {
       method: "DELETE",
@@ -78,13 +79,13 @@ const Contact = () => {
       });
   };
 
-  // Mostrar modal de confirmación
+  
   const handleDeleteClick = (contactId) => {
     setContactToDelete(contactId);
     setShowModal(true);
   };
 
-  // Cerrar modal sin eliminar
+  
   const handleCloseModal = () => {
     setShowModal(false);
     setContactToDelete(null);
@@ -109,11 +110,8 @@ const Contact = () => {
               style={{ minHeight: "200px" }}
             >
               <img
-                src={contact.imageUrl || "https://via.placeholder.com/150"}
-                className="imagen me-3"
-                alt={contact.name || "Sin nombre"}
-              />
-              <div className="flex-grow-1">
+                src="https://picsum.photos/id/237/200/300" className="card-img-top imagen" alt="perrito"/>
+              <div className="flex-grow-1 mb-3 vertical-align">
                 <p><strong>Name:</strong> {contact.name || "Sin nombre"}</p>
                 <p>
                   <i className="fa-solid fa-location-dot me-2"></i>
@@ -144,7 +142,7 @@ const Contact = () => {
         </ul>
       )}
 
-      {/* Modal de confirmación */}
+      
       {showModal && (
         <div className="modal" tabIndex="-1" style={{ display: "block" }}>
           <div className="modal-dialog">
